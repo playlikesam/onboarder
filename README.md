@@ -4,8 +4,6 @@
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5-brightgreen?logo=springboot)](https://spring.io/projects/spring-boot)  
 [![Build Tool](https://img.shields.io/badge/Build-Maven-blue?logo=apachemaven)](https://maven.apache.org/)  
 [![Database](https://img.shields.io/badge/Database-H2-lightgrey?logo=h2)](https://www.h2database.com)  
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)  
-
 
 A simple **Spring Boot** project for customer onboarding, supporting full **CRUD operations** and customer approval flow.  
 Built with **Spring Boot 3**, **Spring Data JPA**, and **H2 Database** (with flexibility to connect to free cloud databases).  
