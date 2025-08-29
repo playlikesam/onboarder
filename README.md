@@ -32,7 +32,7 @@ Built with **Spring Boot 3**, **Spring Data JPA**, and **H2 Database** (with fle
 ---
 
 ## 📂 Project Structure
-
+```
 src/main/java/com/example/onboarder
 │── OnboarderApplication.java # Main Spring Boot App
 │
@@ -57,7 +57,7 @@ src/main/java/com/example/onboarder
 ├── ResourceNotFoundException.java
 └── ResourceAlreadyExistsException.java
 
-
+```
 
 
 ---
