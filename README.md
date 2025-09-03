@@ -3,21 +3,28 @@
 [![Java](https://img.shields.io/badge/Java-17-orange?logo=java)](https://www.oracle.com/java/)  
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5-brightgreen?logo=springboot)](https://spring.io/projects/spring-boot)  
 [![Build Tool](https://img.shields.io/badge/Build-Maven-blue?logo=apachemaven)](https://maven.apache.org/)  
-[![Database](https://img.shields.io/badge/Database-H2-lightgrey?logo=h2)](https://www.h2database.com)  
+[![Database](https://img.shields.io/badge/Database-PostgreSQL-blue?logo=postgresql)](https://www.postgresql.org/)  
+[![Deployment](https://img.shields.io/badge/Deploy-Render-purple?logo=render)](https://render.com/)  
 
-A simple **Spring Boot** project for customer onboarding, supporting full **CRUD operations** and customer approval flow.  
-Built with **Spring Boot 3**, **Spring Data JPA**, and **H2 Database** (with flexibility to connect to free cloud databases).  
+This project is a Spring Boot–based Customer Onboarding API designed to manage the complete customer lifecycle with features like create, read, update, delete (CRUD) and an approval workflow. The application is structured into clear layers: the Controller exposes REST endpoints, DTOs handle request/response formats, Models define the database schema, Repositories manage database queries via JPA, the Service layer contains business logic, and custom Exceptions ensure graceful error handling. Development initially began with the H2 in-memory database for quick setup and testing. When migrating to a production-ready environment on Render, we switched to PostgreSQL for persistent storage. During deployment, we faced a series of challenges: first, database driver issues due to missing dependencies; second, connectivity errors caused by incomplete or misconfigured environment variables; and third, application startup timeouts while Render scanned for the correct exposed port. Each of these was resolved step by step—by explicitly defining the PostgreSQL driver, configuring all sensitive credentials through environment variables and referencing them in application.properties, and ensuring the correct port binding. We also introduced a multi-stage Docker build, which packaged the app more efficiently for deployment. After these fixes, the API was successfully deployed on Render, fully connected to PostgreSQL, and verified through Postman tests. The live API is now available at: [(https://onboarder.onrender.com)]
 
+## ✅ Status
+
+ 1. Local dev with H2 DB
+ 2. CRUD APIs tested with Postman
+ 3. Connected to Render PostgreSQL
+ 4. Deployment via Docker on Render
 ---
 
 ## 📌 Features
 
 - Create a new customer (registration).
 - Retrieve all customers or a single customer by ID.
-- Approve customers (status change: PENDING → APPROVED).
+- Approve customers (status change: `PENDING → APPROVED`).
 - Delete customers.
 - Built-in validation (email, phone, etc.).
 - REST API tested with **Postman**.
+- Deployed live on **Render** with free PostgreSQL DB.
 
 ---
 
@@ -26,12 +33,14 @@ Built with **Spring Boot 3**, **Spring Data JPA**, and **H2 Database** (with fle
 - **Java 17**
 - **Spring Boot 3.5**
 - **Spring Data JPA**
-- **H2 Database** (runtime, can be swapped with Postgres/MySQL cloud DB)
+- **PostgreSQL** (via Render)
 - **Maven**
+- **Docker** (for deployment)
 
 ---
 
 ## 📂 Project Structure
+
 ```
 src/main/java/com/example/onboarder
 │── OnboarderApplication.java # Main Spring Boot App
@@ -91,3 +100,19 @@ mvn spring-boot:run
 2. Supabase
 3. Render free Postgres
 
+### Deployment on Render
+_environment varibles render pe hi dalna so that if you want to change the DB so there's no need to make changes in your current file_
+```
+spring.application.name=onboarder
+
+# PostgreSQL (from Render env variables)
+spring.datasource.url=${SPRING_DATASOURCE_URL}
+spring.datasource.username=${SPRING_DATASOURCE_USERNAME}
+spring.datasource.password=${SPRING_DATASOURCE_PASSWORD}
+spring.datasource.driver-class-name=org.postgresql.Driver
+
+# Hibernate & JPA
+spring.jpa.hibernate.ddl-auto=${SPRING_JPA_HIBERNATE_DDL_AUTO:update}
+spring.jpa.show-sql=true
+spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
+```
